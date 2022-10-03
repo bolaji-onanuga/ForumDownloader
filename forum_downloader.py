@@ -1,6 +1,6 @@
 ## TODO
-# create playlist using list of links, or get names of tracks and add each to
-# new spotify playlist titled after thread.
+# Make script an executable and add a GUI
+# Functionlity to create a YT or spotify playlist titled after the given thread using the list of links, or the names of tracks.
 
 import os
 import subprocess
@@ -15,7 +15,7 @@ print("Hello! ^_^ \n")
 
 start_url = sys.argv[1] + "/"
 
-if sys.argv[2]:
+if len(sys.argv) > 2:
     os.chdir(sys.argv[2]) # directory to save dl'ed songs to
 
 url = start_url
@@ -28,6 +28,12 @@ while r:
     # get contents of webpage
     title = str(r).split('<title>')[1].split('</title>')[0]
     print("Downloading songs from the thread {}".format(title))
+
+    disallowed_characters = "._!\/:*?\"<>|[]-\{\}*\'"
+
+    for character in disallowed_characters:
+        title = title.replace(character, "")
+
 
     os.mkdir(title)
     os.chdir(title)
